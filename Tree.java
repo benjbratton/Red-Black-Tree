@@ -43,6 +43,7 @@ public class Tree {
 					} else // put node as the left child of current_node
 					{
 						current_node.setLeft(node);
+						node.setColor(Node.RED);//added
 						current_node = null;
 					}
 				} else // go to the right
@@ -54,6 +55,7 @@ public class Tree {
 					} else // put node as the right child of current_node
 					{
 						current_node.setRight(node);
+						node.setColor(Node.RED);
 						current_node = null;
 					}
 
