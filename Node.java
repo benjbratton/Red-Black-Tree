@@ -30,8 +30,39 @@ public class Node {
 	//It is really not necessary to write any additional code for this Node.java class. But just in case, if you want to 
 	//modify this class for your specific implementation, you can put your code here
 
-		
-     
+     public Node rotateLeft(Node h) {
+    	 assert h.right.isRed();
+    	 Node temp = h.right;
+    	 h.right = temp.left;
+    	 temp.left = h;
+    	 temp.color = h.color;
+    	 h.color = RED;
+    	 return temp;
+     }
+     public Node rotateRight(Node h) {
+    	 assert h.left.isRed();
+    	 assert h.left.left.isRed();
+    	 Node temp = h.left;
+    	 h.left = temp.right;
+    	 temp.right = h;
+    	 temp.color = h.color;
+    	 h.color = RED;
+    	 return temp;
+     }
+     public void flipColors(Node h) {
+    	 assert !h.isRed();
+    	 assert h.left.isRed();
+    	 assert h.right.isRed();
+     }
+     public Node putRecur(Node h, Node g) {
+    	 if(h.getValue() < g.getValue()) h.left = putRecur(h.left, g);
+    	 else if(h.getValue() > g.getValue()) h.right = putRecur(h.right, g);
+    	 else h.setValue(h.getValue());
+    	 if(h.right.isRed() && !h.left.isRed()) h = rotateLeft(h);
+    	 if(h.left.isRed() && h.left.left.isRed()) h = rotateRight(h);
+    	 if(h.right.isRed() && h.left.isRed()) flipColors(h);
+    	 return h;
+     }
         
 	/*******************************	End of Implementation  *****************************************/
 	
