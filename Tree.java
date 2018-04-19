@@ -21,35 +21,37 @@ public class Tree {
 	 * If the node to be inserted has the value already exist in the tree, it should not be inserted and return "false". So you need to modify the code to forbid 
 	 * nodes with repeating values to be inserted. 
 	 */
-	public boolean insertNode(Node node) {
+public boolean insertNode(Node node) {
 		
 		//Here is just an example of setting colors for a node. So far, it is in green color. But you need to modify the code to dynamically adjust the color to
 		//either RED or BLACK according to the red-black logic 
-		node.setColor(Node.GREEN);
-		
+		//node.setColor(Node.GREEN);
 		// if the root exists
 		if (root == null) {
-			root = node; // let the root point to the current node
+			root = node;
+			node.setColor(Node.BLACK);// let the root point to the current node
 		} else {
 			Node current_node = root;
-			while (current_node != null) {
+			node.setColor(Node.BLACK);
+			node.putRecur(node, current_node);
+		}
+		
+			/*while (current_node != null) {
 				int value = current_node.getValue();
 				if (node.getValue() < value) // go to the left sub-tree
 				{
-					if (current_node.getLeft() != null) // if the left node is
-														// not empty
+					if (current_node.getLeft() != null) // if the left node is not empty
 					{
 						current_node = current_node.getLeft();
 					} else // put node as the left child of current_node
 					{
 						current_node.setLeft(node);
-						node.setColor(Node.RED);//added
+						node.setColor(Node.RED);
 						current_node = null;
 					}
 				} else // go to the right
 				{
-					if (current_node.getRight() != null) // if the right node is
-															// not empty
+					if (current_node.getRight() != null) // if the right node is not empty
 					{
 						current_node = current_node.getRight();
 					} else // put node as the right child of current_node
@@ -60,12 +62,12 @@ public class Tree {
 					}
 
 				}
-			}
-		}
+				if(root.getColor() == Node.RED)
+					root.setColor(Node.BLACK);
+			}*/
 
 		return true;
 	}
-
 	
 
 	
