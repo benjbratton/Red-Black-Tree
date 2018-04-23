@@ -35,8 +35,8 @@ public boolean insertNode(Node node) {
 			node.setColor(Node.BLACK);
 			node.putRecur(node, current_node);
 		}
-		
-			/*while (current_node != null) {
+		//our implementation below
+			while (current_node != null) {
 				int value = current_node.getValue();
 				if (node.getValue() < value) // go to the left sub-tree
 				{
@@ -64,7 +64,7 @@ public boolean insertNode(Node node) {
 				}
 				if(root.getColor() == Node.RED)
 					root.setColor(Node.BLACK);
-			}*/
+			}
 
 		return true;
 	}
