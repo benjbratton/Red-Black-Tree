@@ -1,3 +1,12 @@
+// Course:  CPS 350
+// Semester: 2018 Spring
+// Name: Benjamin Bratton and Nick Cagle
+// Section: 01
+// Assignment: 06
+// Purpose: This program is designed to implement a red black tree in a GUI display that always balances itself
+//			after inserting a new node.
+// Date completed: April 25, 2018
+
 package application;
 
 
