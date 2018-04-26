@@ -84,7 +84,40 @@ public boolean insertNode(Node node) {
    	 }
    	 return false;
     }
-	
+	public Node put(Node h, int key, int val) {
+    	if(h == null) return new Node(key, val, Node.RED);
+    	int cmp = h.getValue() - key;
+    	if(cmp > 0) h.setLeft(put(h.getLeft(), key, val));
+    	else if(cmp < 0) h.setRight(put(h.getRight(), key, val));
+    	else h.setValue(val);
+    	if(h.getRight().isRed() && !h.getLeft().isRed()) h = rotateLeft(h);
+   	 	if(h.getLeft().isRed() && h.getLeft().getLeft().isRed()) h = rotateRight(h);
+   	 	if(h.getRight().isRed() && h.getLeft().isRed()) flipColors(h);
+    }
+    public Node rotateLeft(Node h) {
+   	 assert h.getRight().isRed();
+   	 Node temp = h.getRight();
+   	 h.setRight(temp.getLeft());
+   	 temp.setLeft(h);
+   	 temp.setColor(h.getColor());
+   	 h.setColor(Node.RED);
+   	 return temp;
+    }
+    public Node rotateRight(Node h) {
+   	 assert h.getLeft().isRed();
+   	 assert h.getLeft().getLeft().isRed();
+   	 Node temp = h.getLeft();
+   	 h.setLeft(temp.getRight());
+   	 temp.setRight(h);
+   	 temp.setColor(h.getColor());
+   	 h.setColor(Node.RED);
+   	 return temp;
+    }
+    public void flipColors(Node h) {
+   	 assert !h.isRed();
+   	 assert h.getLeft().isRed();
+   	 assert h.getRight().isRed();
+    }
 
 	
 /*************************************************	End of Implementation   **************************************************************/
