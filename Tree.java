@@ -28,15 +28,21 @@ public boolean insertNode(Node node) {
 		//node.setColor(Node.GREEN);
 		// if the root exists
 		if (root == null) {
-			root = node;
+			setRoot(node);
 			node.setColor(Node.BLACK);// let the root point to the current node
-		} else {
-			Node current_node = root;
-			node.setColor(Node.BLACK);
-			node.putRecur(node, current_node);
+			//insertNode(node.getLeft());
+		} else if(root != null && node.getParent() == null){
+			node.setParent(node);
+			node.getParent().setLeft(node);
+			node.setColor(Node.RED);
 		}
-		//our implementation below
-			while (current_node != null) {
+		if(inTree(node.getValue())) {
+			insertNode(node.getLeft());
+		}
+			
+		
+		
+			/*while (current_node != null) {
 				int value = current_node.getValue();
 				if (node.getValue() < value) // go to the left sub-tree
 				{
@@ -64,10 +70,20 @@ public boolean insertNode(Node node) {
 				}
 				if(root.getColor() == Node.RED)
 					root.setColor(Node.BLACK);
-			}
+			}*/
 
 		return true;
 	}
+    public boolean inTree(int key) {
+   	 Node x = root;
+   	 while(x!= null) {
+   		 int cmp = x.getValue() - key;
+   		 if(cmp > 0) x = x.getLeft();
+   		 else if(cmp < 0) x = x.getRight();
+   		 else return true;
+   	 }
+   	 return false;
+    }
 	
 
 	
