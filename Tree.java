@@ -46,11 +46,75 @@ public boolean insertNode(Node node) {
 			node.setColor(Node.RED);
 		}
 		if(inTree(node.getValue())) {
-			insertNode(node.getLeft());
-		}
+			//insertNode(node.getLeft()); Rubbish Bin
+			root = put(node, node.getValue());
+		}else return false;
 			
-		
-		
+
+
+		return true;
+	}
+
+	//Method returns true if the key is already in the tree, and returns false if it is not in the tree
+    public boolean inTree(int key) {
+   	 Node x = root;
+   	 while(x!= null) {
+   		 int cmp = x.getValue() - key;
+   		 if(cmp > 0) x = x.getLeft();
+   		 else if(cmp < 0) x = x.getRight();
+   		 else return true;
+   	 }
+   	 return false;
+    } //end inTree
+    
+    //The put() method recursively puts a new node into the tree and correctly balances it
+	private Node put(Node h, int val) {
+    	if(h == null) return new Node(val);
+    	int cmp = h.getValue() - val;
+    	if(cmp > 0) h.setLeft(put(h.getLeft(), val));
+    	else if(cmp < 0) h.setRight(put(h.getRight(), val));
+    	else h.setValue(val);
+    	
+    	if(h.getRight().isRed() && !h.getLeft().isRed()) h = rotateLeft(h);
+   	 	if(h.getLeft().isRed() && h.getLeft().getLeft().isRed()) h = rotateRight(h);
+   	 	if(h.getRight().isRed() && h.getLeft().isRed()) flipColors(h);
+    
+   	 	return h;
+	}
+	
+	//Three methods to balance the Tree:
+	
+    public Node rotateLeft(Node h) {
+   	 assert h.getRight().isRed();
+   	 Node temp = h.getRight();
+   	 h.setRight(temp.getLeft());
+   	 temp.setLeft(h);
+   	 temp.setColor(h.getColor());
+   	 h.setColor(Node.RED);
+   	 
+   	 return temp;
+    } //end rotateLeft
+    
+    public Node rotateRight(Node h) {
+   	 assert h.getLeft().isRed();
+   	 assert h.getLeft().getLeft().isRed();
+   	 Node temp = h.getLeft();
+   	 h.setLeft(temp.getRight());
+   	 temp.setRight(h);
+   	 temp.setColor(h.getColor());
+   	 h.setColor(Node.RED);
+   	 
+   	 return temp;
+    } //end rotateRight
+    
+    public void flipColors(Node h) {
+   	 assert !h.isRed();
+   	 assert h.getLeft().isRed();
+   	 assert h.getRight().isRed();
+    } //end flipColors
+
+			
+		//Rubbish Bin \/
 			/*while (current_node != null) {
 				int value = current_node.getValue();
 				if (node.getValue() < value) // go to the left sub-tree
@@ -75,60 +139,10 @@ public boolean insertNode(Node node) {
 						node.setColor(Node.RED);
 						current_node = null;
 					}
-
 				}
 				if(root.getColor() == Node.RED)
 					root.setColor(Node.BLACK);
 			}*/
-
-		return true;
-	}
-    public boolean inTree(int key) {
-   	 Node x = root;
-   	 while(x!= null) {
-   		 int cmp = x.getValue() - key;
-   		 if(cmp > 0) x = x.getLeft();
-   		 else if(cmp < 0) x = x.getRight();
-   		 else return true;
-   	 }
-   	 return false;
-    }
-	public Node put(Node h, int key, int val) {
-    	if(h == null) return new Node(key, val, Node.RED);
-    	int cmp = h.getValue() - key;
-    	if(cmp > 0) h.setLeft(put(h.getLeft(), key, val));
-    	else if(cmp < 0) h.setRight(put(h.getRight(), key, val));
-    	else h.setValue(val);
-    	if(h.getRight().isRed() && !h.getLeft().isRed()) h = rotateLeft(h);
-   	 	if(h.getLeft().isRed() && h.getLeft().getLeft().isRed()) h = rotateRight(h);
-   	 	if(h.getRight().isRed() && h.getLeft().isRed()) flipColors(h);
-    }
-    public Node rotateLeft(Node h) {
-   	 assert h.getRight().isRed();
-   	 Node temp = h.getRight();
-   	 h.setRight(temp.getLeft());
-   	 temp.setLeft(h);
-   	 temp.setColor(h.getColor());
-   	 h.setColor(Node.RED);
-   	 return temp;
-    }
-    public Node rotateRight(Node h) {
-   	 assert h.getLeft().isRed();
-   	 assert h.getLeft().getLeft().isRed();
-   	 Node temp = h.getLeft();
-   	 h.setLeft(temp.getRight());
-   	 temp.setRight(h);
-   	 temp.setColor(h.getColor());
-   	 h.setColor(Node.RED);
-   	 return temp;
-    }
-    public void flipColors(Node h) {
-   	 assert !h.isRed();
-   	 assert h.getLeft().isRed();
-   	 assert h.getRight().isRed();
-    }
-
-	
 /*************************************************	End of Implementation   **************************************************************/
 
 	
